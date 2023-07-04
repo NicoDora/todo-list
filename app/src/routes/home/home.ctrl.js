@@ -26,7 +26,7 @@ const process = {
   main: (req, res) => {
     try {
       const { text } = req.body;
-      const todo = new todolist();
+      const todo = new Todolist();
       const response = todo.add(text);
       return res.json(response[0]);
     } catch (error) {

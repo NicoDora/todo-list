@@ -9,6 +9,7 @@ const { bringList } = require("./src/models/ListStorage");
 
 // 라우팅
 const main = require("./src/routes/home");
+const { check } = require("./src/routes/home/home.ctrl");
 
 // 앱 세팅
 app.set("views", "./src/views"); // views 폴더를 사용

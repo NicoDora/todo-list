@@ -6,7 +6,6 @@ const text = document.querySelector("#text"),
 
 addBtn.addEventListener("click", addText);
 
-
 function addText() {
     const req = {
         text: text.value,
@@ -55,16 +54,21 @@ function addText() {
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
 
-            item.innerHTML = listSplit[0]; // description
-
-            if (listSplit[1] === "1") {
+            if (listSplit[1] === " 1") {
                 checkbox.checked = true;
             } else {
                 checkbox.checked = false;
             }
 
-            list.appendChild(item);
+            console.log(listSplit);
+
             item.appendChild(checkbox);
+
+            const description = document.createElement("span");
+            description.innerHTML = listSplit[0]; // description
+            
+            item.appendChild(description);
+            list.appendChild(item);
           }
       })
       .catch((error) => {

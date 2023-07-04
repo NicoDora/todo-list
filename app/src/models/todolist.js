@@ -1,6 +1,6 @@
 "use strict";
 
-const e = require("express");
+const express = require("express");
 const ListStorage = require("./ListStorage");
 
 class Todolist {
@@ -22,10 +22,6 @@ class Todolist {
 
     add(text) {
         return this.storage.add(text);
-    }
-
-    complete(id) {
-        return this.storage.complete(id);
     }
 
 }

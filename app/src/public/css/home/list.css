@@ -89,3 +89,12 @@ input:hover {
     font-size: 20px;
     text-align: auto;
 }
+
+/* 체크박스 스타일 */
+#list input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    vertical-align: middle;
+    cursor: pointer;
+}
