@@ -1,5 +1,6 @@
 "use strict";
 
+const e = require("express");
 const ListStorage = require("./ListStorage");
 
 class Todolist {
@@ -8,17 +9,25 @@ class Todolist {
         this.storage = new ListStorage();
     }
 
-    getAll() {
-        return this.storage.getAll();
+    async getList() {
+        const results = await this.storage.getList();
+        const list = results.map((row) => {
+            return {
+                description: row.description,
+                is_check: row.is_check,
+            };
+        });
+        return await list;
     }
 
-    async add(text) {
-        return await this.storage.add(text);
+    add(text) {
+        return this.storage.add(text);
     }
 
     complete(id) {
         return this.storage.complete(id);
     }
+
 }
 
 module.exports = Todolist;

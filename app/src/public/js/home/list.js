@@ -1,9 +1,11 @@
 "use strict";
 
 const text = document.querySelector("#text"),
-    addBtn = document.querySelector("#button");
+    addBtn = document.querySelector("#button"),
+    list = document.querySelector("#list");
 
 addBtn.addEventListener("click", addText);
+
 
 function addText() {
     const req = {
@@ -29,3 +31,43 @@ function addText() {
         console.error(error);
       });
 }
+
+(function bringList() {
+  fetch("/getlist", {
+      method: "GET",
+      headers: {
+          "Content-Type": "text/html", // HTML 형식으로 요청
+      },
+  })
+      .then((response) => {
+          if (!response.ok) {
+              throw new Error("Failed to fetch list");
+          }
+          return response.json();
+      })
+      .then((data) => {
+          const list = document.querySelector("#list");
+          for (let i = 0; i < data.length; i++) {
+            
+            const item = document.createElement("p"); // <p></p>
+            const listSplit = data[i].split(","); // [description, is_check]
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+
+            item.innerHTML = listSplit[0]; // description
+
+            if (listSplit[1] === "1") {
+                checkbox.checked = true;
+            } else {
+                checkbox.checked = false;
+            }
+
+            list.appendChild(item);
+            item.appendChild(checkbox);
+          }
+      })
+      .catch((error) => {
+          console.error(error);
+      });
+})();

@@ -75,3 +75,17 @@ input:hover {
     background-color: #d2d2d2;
     border-radius: 7px;
 }
+
+/* 리스트 스타일 */
+#list {
+    padding-left: 0px;
+}
+
+/* 리스트 아이템 스타일 */
+#list p {
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    font-size: 20px;
+    text-align: auto;
+}
