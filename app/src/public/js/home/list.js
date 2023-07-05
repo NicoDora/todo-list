@@ -4,7 +4,7 @@ const text = document.querySelector("#text"),
     addBtn = document.querySelector("#button"),
     list = document.querySelector("#list");
 
-    let isItemAdded = false; // 리스트가 추가되었는지 확인하는 변수
+let isItemAdded = false; // 리스트가 추가되었는지 확인하는 변수
 
 addBtn.addEventListener("click", addList);
 
@@ -80,7 +80,7 @@ function addList() {
             checkbox.type = "checkbox";
             checkbox.style.zoom = "1.3";
 
-            console.log(`id:${id}, description:${description}, is_check:${is_check}`);
+            console.log(`id:"${id}", description:"${description}", is_check:"${is_check}"`);
 
             checkbox.addEventListener("change", () => { // 체크박스 체크 시
                 const isCheck = checkbox.checked ? 1 : 0;
@@ -126,6 +126,13 @@ function addList() {
                 edit.style.display = "inline-block"; // edit창 보임
                 edit.focus(); // edit창에 focus
             });
+
+            edit.addEventListener("keyup", function (event) {
+                if (event.keyCode === 13) { // Enter
+                    const newDescription = edit.value;
+                    editList(id, newDescription);
+                }
+            })
 
             doneButton.addEventListener("click", () => {
                 const newDescription = edit.value;
@@ -199,7 +206,11 @@ function editList(id, newDescription) {
         id: id,
         newDescription: newDescription,
     };
-  
+
+    if (newDescription === "") {
+        return alert("리스트를 입력해주세요.");
+    }
+
     fetch("/edit", {
       method: "POST",
       headers: {
