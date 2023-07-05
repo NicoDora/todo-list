@@ -1,6 +1,5 @@
 "use strict";
 
-const express = require("express");
 const ListStorage = require("./ListStorage");
 
 class Todolist {
@@ -22,6 +21,14 @@ class Todolist {
 
     add(text) {
         return this.storage.add(text);
+    }
+
+    check(description, is_check) {
+        return this.storage.check(description, is_check);
+    }
+
+    delete(description) {
+        return this.storage.delete(description);
     }
 
 }

@@ -95,6 +95,24 @@ input:hover {
     width: 15px;
     height: 15px;
     margin-right: 10px;
+    padding: 5px;
     vertical-align: middle;
     cursor: pointer;
+}
+
+/* 체크박스 호버 효과 */
+#list input[type="checkbox"]:hover {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+/* 휴지통 스타일 */
+#list i {
+    cursor: pointer;
+    padding: 3px;
+    opacity: 0.8;
+}
+
+/* 휴지통 호버 효과 */
+#list i:hover {
+    color: #3a3939;
 }

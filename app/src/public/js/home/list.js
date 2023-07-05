@@ -4,12 +4,26 @@ const text = document.querySelector("#text"),
     addBtn = document.querySelector("#button"),
     list = document.querySelector("#list");
 
-addBtn.addEventListener("click", addText);
+    let isItemAdded = false; // 리스트가 추가되었는지 확인하는 변수
 
-function addText() {
+addBtn.addEventListener("click", addList);
+
+text.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13 && !isItemAdded) { // Enter
+      addList();
+    }
+});
+
+function addList() {
     const req = {
         text: text.value,
     };
+
+    if (text.value === "") {
+        return alert("리스트를 입력해주세요.");
+    }
+
+    isItemAdded = true; // 리스트가 추가되었음을 확인
 
     fetch("/", {
         method: "POST",
@@ -49,25 +63,45 @@ function addText() {
           for (let i = 0; i < data.length; i++) {
             
             const item = document.createElement("p"); // <p></p>
-            const listSplit = data[i].split(","); // [description, is_check]
+            const trash = document.createElement("i"); // <i></i>
+            trash.classList.add("fa-solid", "fa-trash"); // <i class="fa-solid fa-trash"></i>
 
+            const listSplit = data[i].split(","); // [description, is_check]
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
 
-            if (listSplit[1] === " 1") {
-                checkbox.checked = true;
-            } else {
-                checkbox.checked = false;
-            }
-
             console.log(listSplit);
 
+            checkbox.addEventListener("change", () => {
+                const isCheck = checkbox.checked ? 1 : 0;
+                updateCheckStatus(listSplit[0], isCheck);
+            });
+
+            checkbox.style.padding = "5px";
             item.appendChild(checkbox);
 
             const description = document.createElement("span");
             description.innerHTML = listSplit[0]; // description
-            
+
+            if (listSplit[1] === " 1") { // is_check
+                checkbox.checked = true;
+                description.style.textDecoration = "line-through";
+                description.style.opacity = "0.5";
+            } else {
+                checkbox.checked = false;
+            }
+
+            trash.addEventListener("click", () => {
+                const description = listSplit[0];
+                deleteList(description);
+            });
+
+            item.style.display = "flex";
+            item.style.justifyContent = "space-between";
+            item.style.alignItems = "center";
+
             item.appendChild(description);
+            item.appendChild(trash);
             list.appendChild(item);
           }
       })
@@ -75,3 +109,52 @@ function addText() {
           console.error(error);
       });
 })();
+
+function updateCheckStatus(description, isCheck) {
+    const req = {
+      description: description,
+      is_check: isCheck,
+    };
+  
+    fetch("/check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req),
+    })
+      .then((response) => {
+        if (response.ok) {
+            location.reload();
+        } else {
+            throw new Error("Failed to update check status");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+}
+
+function deleteList(description) {
+    const req = {
+      description: description,
+    };
+  
+    fetch("/delete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req),
+    })
+      .then((response) => {
+        if (response.ok) {
+          location.reload();
+        } else {
+          throw new Error("Failed to delete list item");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+}  

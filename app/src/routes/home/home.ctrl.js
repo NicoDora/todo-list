@@ -36,8 +36,38 @@ const process = {
   },
 };
 
+const check = {
+  main: (req, res) => {
+    try {
+      const { description, is_check } = req.body;
+      const todo = new Todolist();
+      const response = todo.check(description, is_check);
+      return res.json(response[1]);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+}
+
+const remove = {
+  main: (req, res) => {
+    try {
+      const { description } = req.body;
+      const todo = new Todolist();
+      const response = todo.delete(description);
+      return res.json(response[0]);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+}
+
 module.exports = {
   output,
   input,
   process,
+  check,
+  remove,
 };

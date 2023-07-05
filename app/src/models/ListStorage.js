@@ -20,6 +20,16 @@ class ListStorage {
         return db.query("INSERT INTO lists (description) VALUES (?)", [description]);
     }
 
+    // list 체크박스 체크
+    check(description, is_check) {
+        return db.query("UPDATE lists SET is_check = ? WHERE description = ?", [is_check, description]);
+    }
+
+    // list 삭제
+    delete(description) {
+        return db.query("DELETE FROM lists WHERE description = ?", [description]);
+    }
+
 }
 
 module.exports = ListStorage;
