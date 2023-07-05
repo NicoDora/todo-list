@@ -30,6 +30,11 @@ class ListStorage {
         return db.query("DELETE FROM lists WHERE description = ?", [description]);
     }
 
+    // list 수정
+    edit(description, newDescription) {
+        return db.query("UPDATE lists SET description = ? WHERE description = ?", [newDescription, description]);
+    }
+
 }
 
 module.exports = ListStorage;

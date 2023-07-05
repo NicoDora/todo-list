@@ -88,6 +88,12 @@ function addList() {
             description.classList.add("description");
             description.innerHTML = listSplit[0]; // description
 
+            const edit = document.createElement("input");
+            edit.classList.add("edit-input");
+            edit.value = listSplit[0]; // description
+            edit.style.display = "none"; // 숨김
+
+
             if (listSplit[1] === " 1") { // is_check
                 checkbox.checked = true;
                 description.style.textDecoration = "line-through";
@@ -103,12 +109,28 @@ function addList() {
                 deleteList(description);
             });
 
+            const doneButton = document.createElement("button");
+            doneButton.type = "button";
+            doneButton.classList.add("done-button");
+            doneButton.textContent = "완료";
+            doneButton.style.display = "none";
+            
             pencil.addEventListener("click", () => {
-                
-                console.log("Pencil icon clicked");
+                description.style.display = "none"; // list 숨김
+                pencil.style.display = "none"; // pencil 숨김
+                doneButton.style.display = "inline-block"; // button 보임
+                edit.style.display = "inline-block"; // edit창 보임
+                edit.focus(); // edit창에 focus
             });
 
+            doneButton.addEventListener("click", () => {
+                const newDescription = edit.value;
+                editList(listSplit[0], newDescription);
+              });
+
             item.appendChild(description);
+            item.appendChild(edit);
+            item.appendChild(doneButton);
             item.appendChild(pencil);
             item.appendChild(trash);
             list.appendChild(item);
@@ -166,4 +188,29 @@ function deleteList(description) {
       .catch((error) => {
         console.error(error);
       });
-}  
+}
+
+function editList(description, newDescription) {
+    const req = {
+      description: description,
+      newDescription: newDescription,
+    };
+  
+    fetch("/edit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req),
+    })
+      .then((response) => {
+        if (response.ok) {
+          location.reload();
+        } else {
+          throw new Error("Failed to edit list item");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+}

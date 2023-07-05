@@ -140,3 +140,13 @@ input:hover {
     transform: scale(1.2);
     color: #3a3939;
 }
+
+/* 완료 버튼 스타일 */
+#list button.done-button {
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.done-button:hover {
+    text-decoration: underline;
+}

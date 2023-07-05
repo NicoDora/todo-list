@@ -31,6 +31,10 @@ class Todolist {
         return this.storage.delete(description);
     }
 
+    edit(description, newDescription) {
+        return this.storage.edit(description, newDescription);
+    }
+
 }
 
 module.exports = Todolist;

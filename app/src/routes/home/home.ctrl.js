@@ -64,10 +64,25 @@ const remove = {
   }
 }
 
+const edit = {
+  main: (req, res) => {
+    try {
+      const { description, newDescription } = req.body;
+      const todo = new Todolist();
+      const response = todo.edit(description, newDescription);
+      return res.json(response[0]);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+}
+
 module.exports = {
   output,
   input,
   process,
   check,
   remove,
+  edit,
 };
