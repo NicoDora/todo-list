@@ -240,3 +240,21 @@ button.done-button:hover {
     border-left:1px solid #4a4a4a;
     border-right:1px solid #4a4a4a;
 }
+
+/* 수정 입력 필드 스타일 */
+input.edit-input {
+    border: none;
+    outline: none;
+    width: 200px;
+    height: 30px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-size: 18px;
+    transition: all 0.2s ease;
+}
+
+/* 수정 입력 필드 호버 효과 */
+input.edit-input:hover {
+    background-color: #e8e8e8;
+    border-radius: 7px;
+}

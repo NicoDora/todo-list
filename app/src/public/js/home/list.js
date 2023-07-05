@@ -71,10 +71,10 @@ function addList() {
             pencil.classList.add("fa-solid", "fa-pen"); // <i class="fa-solid fa-pen"></i>
             
             // console.log(data);
-            const listSplit = data[i].split(","),
+            const listSplit = data[i].split(", "),
                 id = listSplit[0],
-                description = listSplit[1].substr(1),
-                is_check = listSplit[2].substr(1);
+                description = listSplit[1],
+                is_check = listSplit[2];
 
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
