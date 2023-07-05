@@ -69,11 +69,12 @@ function addList() {
             trash.classList.add("fa-solid", "fa-trash"); // <i class="fa-solid fa-trash"></i>
             const pencil = document.createElement("i"); // <i></i>
             pencil.classList.add("fa-solid", "fa-pen"); // <i class="fa-solid fa-pen"></i>
-
+            
+            // console.log(data);
             const listSplit = data[i].split(","),
                 id = listSplit[0],
-                description = listSplit[1],
-                is_check = listSplit[2];
+                description = listSplit[1].substr(1),
+                is_check = listSplit[2].substr(1);
 
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
@@ -98,7 +99,7 @@ function addList() {
             edit.style.display = "none"; // 숨김
 
 
-            if (is_check === " 1") { // is_check
+            if (is_check === "1") { // is_check
                 checkbox.checked = true;
                 description_span.style.textDecoration = "line-through";
                 description_span.style.opacity = "0.5";
