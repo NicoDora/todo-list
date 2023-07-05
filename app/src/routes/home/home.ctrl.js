@@ -13,7 +13,7 @@ const input = {
     try {
       const todo = new Todolist();
       const list = await todo.getList();
-      const response = list.map((item) => `${item.description}, ${item.is_check}`);
+      const response = list.map((item) => `${item.id}, ${item.description}, ${item.is_check}`);
       return res.json(response);
     } catch (error) {
       console.error(error);
@@ -39,9 +39,9 @@ const process = {
 const check = {
   main: (req, res) => {
     try {
-      const { description, is_check } = req.body;
+      const { id, is_check } = req.body;
       const todo = new Todolist();
-      const response = todo.check(description, is_check);
+      const response = todo.check(id, is_check);
       return res.json(response[1]);
     } catch (error) {
       console.error(error);
@@ -53,9 +53,9 @@ const check = {
 const remove = {
   main: (req, res) => {
     try {
-      const { description } = req.body;
+      const { id } = req.body;
       const todo = new Todolist();
-      const response = todo.delete(description);
+      const response = todo.delete(id);
       return res.json(response[0]);
     } catch (error) {
       console.error(error);
@@ -67,9 +67,9 @@ const remove = {
 const edit = {
   main: (req, res) => {
     try {
-      const { description, newDescription } = req.body;
+      const { id, newDescription } = req.body;
       const todo = new Todolist();
-      const response = todo.edit(description, newDescription);
+      const response = todo.edit(id, newDescription);
       return res.json(response[0]);
     } catch (error) {
       console.error(error);

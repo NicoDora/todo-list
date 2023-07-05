@@ -7,7 +7,7 @@ class ListStorage {
     // list 조회
     getList() {
         return new Promise((resolve, reject) => {
-        db.query("SELECT description, is_check FROM lists", (error, results) => {
+        db.query("SELECT id, description, is_check FROM lists", (error, results) => {
             if (error) {
                 reject(error);
             }
@@ -21,20 +21,19 @@ class ListStorage {
     }
 
     // list 체크박스 체크
-    check(description, is_check) {
-        return db.query("UPDATE lists SET is_check = ? WHERE description = ?", [is_check, description]);
+    check(id, is_check) {
+        return db.query("UPDATE lists SET is_check = ? WHERE id = ?", [is_check, id]);
     }
 
     // list 삭제
-    delete(description) {
-        return db.query("DELETE FROM lists WHERE description = ?", [description]);
+    delete(id) {
+        return db.query("DELETE FROM lists WHERE id = ?", [id]);
     }
 
     // list 수정
-    edit(description, newDescription) {
-        return db.query("UPDATE lists SET description = ? WHERE description = ?", [newDescription, description]);
+    edit(id, newDescription) {
+        return db.query("UPDATE lists SET description = ? WHERE id = ?", [newDescription, id]);
     }
-
 }
 
 module.exports = ListStorage;

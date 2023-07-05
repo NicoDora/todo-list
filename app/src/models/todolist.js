@@ -12,6 +12,7 @@ class Todolist {
         const results = await this.storage.getList();
         const list = results.map((row) => {
             return {
+                id: row.id,
                 description: row.description,
                 is_check: row.is_check,
             };
@@ -23,16 +24,16 @@ class Todolist {
         return this.storage.add(text);
     }
 
-    check(description, is_check) {
-        return this.storage.check(description, is_check);
+    check(id, is_check) {
+        return this.storage.check(id, is_check);
     }
 
-    delete(description) {
-        return this.storage.delete(description);
+    delete(id) {
+        return this.storage.delete(id);
     }
 
-    edit(description, newDescription) {
-        return this.storage.edit(description, newDescription);
+    edit(id, newDescription) {
+        return this.storage.edit(id, newDescription);
     }
 
 }

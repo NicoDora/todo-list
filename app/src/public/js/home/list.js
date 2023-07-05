@@ -70,43 +70,46 @@ function addList() {
             const pencil = document.createElement("i"); // <i></i>
             pencil.classList.add("fa-solid", "fa-pen"); // <i class="fa-solid fa-pen"></i>
 
-            const listSplit = data[i].split(","); // [description, is_check]
+            const listSplit = data[i].split(","),
+                id = listSplit[0],
+                description = listSplit[1],
+                is_check = listSplit[2];
+
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             checkbox.style.zoom = "1.3";
 
-            console.log(listSplit);
+            console.log(`id:${id}, description:${description}, is_check:${is_check}`);
 
-            checkbox.addEventListener("change", () => {
+            checkbox.addEventListener("change", () => { // 체크박스 체크 시
                 const isCheck = checkbox.checked ? 1 : 0;
-                updateCheckStatus(listSplit[0], isCheck);
+                updateCheckStatus(id, isCheck);
             });
 
             item.appendChild(checkbox);
 
-            const description = document.createElement("span");
-            description.classList.add("description");
-            description.innerHTML = listSplit[0]; // description
+            const description_span = document.createElement("span");
+            description_span.classList.add("description");
+            description_span.innerHTML = description; // description
 
             const edit = document.createElement("input");
             edit.classList.add("edit-input");
-            edit.value = listSplit[0]; // description
+            edit.value = description; // description
             edit.style.display = "none"; // 숨김
 
 
-            if (listSplit[1] === " 1") { // is_check
+            if (is_check === " 1") { // is_check
                 checkbox.checked = true;
-                description.style.textDecoration = "line-through";
-                description.style.opacity = "0.5";
+                description_span.style.textDecoration = "line-through";
+                description_span.style.opacity = "0.5";
                 pencil.style.display = "none";
                 trash.style.marginLeft = "auto";
             } else {
                 checkbox.checked = false;
             }
 
-            trash.addEventListener("click", () => {
-                const description = listSplit[0];
-                deleteList(description);
+            trash.addEventListener("click", () => { // trash 버튼 클릭 시
+                deleteList(id);
             });
 
             const doneButton = document.createElement("button");
@@ -116,7 +119,7 @@ function addList() {
             doneButton.style.display = "none";
             
             pencil.addEventListener("click", () => {
-                description.style.display = "none"; // list 숨김
+                description_span.style.display = "none"; // list 숨김
                 pencil.style.display = "none"; // pencil 숨김
                 doneButton.style.display = "inline-block"; // button 보임
                 edit.style.display = "inline-block"; // edit창 보임
@@ -125,10 +128,10 @@ function addList() {
 
             doneButton.addEventListener("click", () => {
                 const newDescription = edit.value;
-                editList(listSplit[0], newDescription);
+                editList(id, newDescription);
               });
 
-            item.appendChild(description);
+            item.appendChild(description_span);
             item.appendChild(edit);
             item.appendChild(doneButton);
             item.appendChild(pencil);
@@ -141,9 +144,9 @@ function addList() {
       });
 })();
 
-function updateCheckStatus(description, isCheck) {
+function updateCheckStatus(id, isCheck) {
     const req = {
-      description: description,
+      id: id,
       is_check: isCheck,
     };
   
@@ -166,9 +169,9 @@ function updateCheckStatus(description, isCheck) {
       });
 }
 
-function deleteList(description) {
+function deleteList(id) {
     const req = {
-      description: description,
+      id: id,
     };
   
     fetch("/delete", {
@@ -190,10 +193,10 @@ function deleteList(description) {
       });
 }
 
-function editList(description, newDescription) {
+function editList(id, newDescription) {
     const req = {
-      description: description,
-      newDescription: newDescription,
+        id: id,
+        newDescription: newDescription,
     };
   
     fetch("/edit", {
