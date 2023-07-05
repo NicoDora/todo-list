@@ -73,6 +73,7 @@ function addList() {
             const listSplit = data[i].split(","); // [description, is_check]
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
+            checkbox.style.zoom = "1.3";
 
             console.log(listSplit);
 
@@ -91,6 +92,8 @@ function addList() {
                 checkbox.checked = true;
                 description.style.textDecoration = "line-through";
                 description.style.opacity = "0.5";
+                pencil.style.display = "none";
+                trash.style.marginLeft = "auto";
             } else {
                 checkbox.checked = false;
             }
@@ -98,6 +101,11 @@ function addList() {
             trash.addEventListener("click", () => {
                 const description = listSplit[0];
                 deleteList(description);
+            });
+
+            pencil.addEventListener("click", () => {
+                
+                console.log("Pencil icon clicked");
             });
 
             item.appendChild(description);
