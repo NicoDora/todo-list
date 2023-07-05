@@ -63,8 +63,12 @@ function addList() {
           for (let i = 0; i < data.length; i++) {
             
             const item = document.createElement("p"); // <p></p>
+            item.classList.add("item"); // <p class="item"></p>
+            item.style.wordBreak = "break-all"; // <p class="item" style="word-break: break-all;"></p> 자동 줄바꿈
             const trash = document.createElement("i"); // <i></i>
             trash.classList.add("fa-solid", "fa-trash"); // <i class="fa-solid fa-trash"></i>
+            const pencil = document.createElement("i"); // <i></i>
+            pencil.classList.add("fa-solid", "fa-pen"); // <i class="fa-solid fa-pen"></i>
 
             const listSplit = data[i].split(","); // [description, is_check]
             const checkbox = document.createElement("input");
@@ -77,10 +81,10 @@ function addList() {
                 updateCheckStatus(listSplit[0], isCheck);
             });
 
-            checkbox.style.padding = "5px";
             item.appendChild(checkbox);
 
             const description = document.createElement("span");
+            description.classList.add("description");
             description.innerHTML = listSplit[0]; // description
 
             if (listSplit[1] === " 1") { // is_check
@@ -96,11 +100,8 @@ function addList() {
                 deleteList(description);
             });
 
-            item.style.display = "flex";
-            item.style.justifyContent = "space-between";
-            item.style.alignItems = "center";
-
             item.appendChild(description);
+            item.appendChild(pencil);
             item.appendChild(trash);
             list.appendChild(item);
           }
