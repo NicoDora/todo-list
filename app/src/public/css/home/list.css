@@ -56,6 +56,14 @@ input[type="text"]:hover {
     border-radius: 7px;
 }
 
+/* 입력 필드 포커스 효과 */
+input[type="text"]:focus {
+    border-bottom: 1px solid #6a6666;
+    background-color: #fafafa;
+    border-radius: 7px;
+    box-shadow: 0 0 20px 0 rgba(7, 31, 245, 0.137), 0 5px 5px 0 rgba(112, 121, 245, 0.108);
+}
+
 /* 버튼 스타일 */
 #button {
     display: inline-block;
@@ -155,7 +163,7 @@ input[type="text"]:hover {
 
 /* 체크박스 호버 효과 */
 #list input[type="checkbox"]:hover {
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    box-shadow: 0 0 5px 0 rgba(112, 121, 245, 0.344), 0 5px 5px 0 rgba(112, 121, 245, 0.344);
 }
 
 /* 연필 스타일 */
@@ -269,4 +277,11 @@ input.edit-input {
 input.edit-input:hover {
     background-color: #e8e8e8;
     border-radius: 7px;
+}
+
+/* 수정 입력 필드 포커스 효과 */
+input.edit-input:focus {
+    background-color: #fafafa;
+    border-radius: 7px;
+    box-shadow: 0 0 20px 0 rgba(7, 31, 245, 0.137), 0 5px 5px 0 rgba(112, 121, 245, 0.108);
 }
