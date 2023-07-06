@@ -32,7 +32,7 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    /* position: relative; */
 }
 
 /* 입력 필드 스타일 */
