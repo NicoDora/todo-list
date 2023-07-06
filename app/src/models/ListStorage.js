@@ -17,7 +17,7 @@ class ListStorage {
 
     // list 추가
     add(description) {
-        return db.query("INSERT INTO lists (description) VALUES (?)", [description]);
+        db.query("INSERT INTO lists (description) VALUES (?)", [description]);
     }
 
     // list 체크박스 체크
