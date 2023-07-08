@@ -9,7 +9,7 @@ const output = {
 };
 
 const input = {
-  main: async (req, res) => {
+  list: async (req, res) => {
     try {
       const todo = new Todolist();
       const list = await todo.getList();
@@ -23,66 +23,68 @@ const input = {
 };
 
 const process = {
-  main: (req, res) => {
+  getList: async (req, res) => {
+    try {
+      const todo = new Todolist();
+      const list = await todo.getList();
+      const response = list.map((item) => `${item.id}, ${item.description}, ${item.is_check}`);
+      return res.json(response);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
+
+  addList: async (req, res) => {
     try {
       const { text } = req.body;
       const todo = new Todolist();
-      const response = todo.add(text);
-      return res.json(response[0]);
+      const response = await todo.add(text);
+      return res.json(response);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
+
+  checkList: async (req, res) => {
+    try {
+      const { id, is_check } = req.body;
+      const todo = new Todolist();
+      const response = await todo.check(id, is_check);
+      return res.json(response);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
+
+  deleteList: async (req, res) => {
+    try {
+      const { id } = req.body;
+      const todo = new Todolist();
+      const response = await todo.delete(id);
+      return res.json(response);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
+
+  editList: (req, res) => {
+    try {
+      const { id, newDescription } = req.body;
+      const todo = new Todolist();
+      const response = todo.edit(id, newDescription);
+      return res.json(response);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
   },
 };
-
-const check = {
-  main: (req, res) => {
-    try {
-      const { id, is_check } = req.body;
-      const todo = new Todolist();
-      const response = todo.check(id, is_check);
-      return res.json(response[1]);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-}
-
-const remove = {
-  main: (req, res) => {
-    try {
-      const { id } = req.body;
-      const todo = new Todolist();
-      const response = todo.delete(id);
-      return res.json(response[0]);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-}
-
-const edit = {
-  main: (req, res) => {
-    try {
-      const { id, newDescription } = req.body;
-      const todo = new Todolist();
-      const response = todo.edit(id, newDescription);
-      return res.json(response[0]);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-}
-
 module.exports = {
   output,
   input,
   process,
-  check,
-  remove,
-  edit,
 };

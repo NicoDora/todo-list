@@ -3,8 +3,7 @@
 const ListStorage = require("./ListStorage");
 
 class Todolist {
-    constructor(body) {
-        this.body = body;
+    constructor() {
         this.storage = new ListStorage();
     }
 
@@ -20,22 +19,37 @@ class Todolist {
         return await list;
     }
 
-    add(text) {
-        return this.storage.add(text);
+    async add(text) {
+        const result = await this.storage.add(text);
+        if(!result.affectedRows) {
+            throw new Error('추가 실패');
+        }
+        return {massege: "add 성공!!", status: 200, resource: result};
     }
 
-    check(id, is_check) {
-        return this.storage.check(id, is_check);
+    async check(id, is_check) {
+        const result = await this.storage.check(id, is_check);
+        if(!result.affectedRows) {
+            throw new Error('체크 실패');
+        }
+        return {massege: "check 성공!!", status: 200, resource: result};
     }
 
-    delete(id) {
-        return this.storage.delete(id);
+    async delete(id) {
+        const result = await this.storage.delete(id);
+        if(!result.affectedRows) {
+            throw new Error('삭제 실패');
+        }
+        return {massege: "delete 성공!!", status: 200, resource: result};
     }
 
-    edit(id, newDescription) {
-        return this.storage.edit(id, newDescription);
+    async edit(id, newDescription) {
+        const result = await this.storage.edit(id, newDescription);
+        if(!result.affectedRows) {
+            throw new Error('수정 실패');
+        }
+        return {massege: "edit 성공!!", status: 200, resource: result};
     }
-
 }
 
 module.exports = Todolist;
